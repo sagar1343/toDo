@@ -1,0 +1,93 @@
+:root {
+  font-size: 10px;
+  --purple-color: #3f37c9;
+  --lightpurple-color: #4361ee;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 4rem;
+}
+.contianer {
+  flex-basis: 70rem;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 5px;
+}
+h1 {
+  align-self: center;
+  font-size: 4rem;
+  text-wrap: nowrap;
+  margin-bottom: 2rem;
+}
+form {
+  width: 100%;
+}
+ul {
+  list-style-type: none;
+  width: 100%;
+}
+li {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-block: 1rem;
+  border-radius: 3px;
+}
+input {
+  width: 100%;
+  padding: 1rem 2rem;
+  border: 2px solid rgba(0, 0, 0, 0.16);
+  border-radius: 3px;
+  outline: none;
+  margin-bottom: 1rem;
+}
+input:focus-visible {
+  border: 2px solid var(--lightpurple-color);
+}
+.listBody {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+button {
+  padding: 0.7rem 1.4rem;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  font-size: 1.8rem;
+  color: white;
+  cursor: pointer;
+}
+.crudBtn {
+  background-color: var(--lightpurple-color);
+}
+.crudBtn:hover {
+  background-color: var(--purple-color);
+}
+#submitBtn,
+#updateBtn {
+  color: var(--lightpurple-color);
+  background-color: white;
+  margin-block: 1rem;
+  border: 2px solid var(--lightpurple-color);
+}
+#submitBtn:hover,
+#updateBrn:hover {
+  background-color: var(--lightpurple-color);
+  color: white;
+}
+
+li p {
+  font-size: 1.3rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
