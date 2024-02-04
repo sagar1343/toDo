@@ -4,22 +4,13 @@ const ul = document.querySelector("ul");
 const submitBtn = document.querySelector("#submitBtn");
 let itemId = 1;
 
-form.addEventListener("submit", (event) => handleSubmit(event));
-ul.addEventListener("click", (event) => {
-  const editBtn = event.target.classList.contains("edit");
-  const deleteBtn = event.target.classList.contains("delete");
-  if (editBtn) {
-    console.log("e");
-    handleEdit(event.target);
-  } else if (deleteBtn) {
-    handleDelete(event.target);
-  }
-});
+form.addEventListener("submit", (event) => createTask(event));
+ul.addEventListener("click", (event) => handleListClick(event));
 
-function handleSubmit(event) {
+function createTask(event) {
   event.preventDefault();
   const li = document.createElement("li");
-  li.id = itemId;
+  li.id = `item${itemId}`;
   li.classList.add("listItem");
   li.innerHTML = `
   <div class="listBody">
@@ -34,8 +25,19 @@ function handleSubmit(event) {
   itemId++;
 }
 
+function handleListClick(event) {
+  const editBtn = event.target.classList.contains("edit");
+  const deleteBtn = event.target.classList.contains("delete");
+  if (editBtn) {
+    input.focus();
+    handleEdit(event.target);
+  } else if (deleteBtn) {
+    handleDelete(event.target);
+  }
+}
+
 function handleDelete(element) {
-  const deleteItem = getListIndex(element);
+  const deleteItem = getList(element);
   deleteItem.remove();
 }
 
@@ -43,22 +45,33 @@ function handleEdit(element) {
   const editItem = getList(element);
   const updateBtn = document.createElement("button");
   input.value = editItem.querySelector("p").innerText;
-  submitBtn.style.display = "none";
+  submitBtn.disabled = true;
+  displayCrudButton(true);
   updateBtn.id = "updateBtn";
   updateBtn.innerText = "Update";
   form.appendChild(updateBtn);
 
-  updateBtn.addEventListener("click", () => handleUpdate(editItem, updateBtn));
+  updateBtn.addEventListener("click", () =>
+    handleUpdate(editItem, updateBtn, element)
+  );
 }
 
 function handleUpdate(editItem, updateBtn) {
-  editItem.querySelector("p").innerText = input.value;
-  input.value = "";
-  submitBtn.style.display = "block";
-  updateBtn.remove();
+  if (input.value) {
+    editItem.querySelector("p").innerText = input.value;
+    input.value = "";
+    submitBtn.disabled = false;
+    displayCrudButton(false);
+    updateBtn.remove();
+  }
 }
 
 function getList(element) {
   const parent = element.closest(".listItem");
-  return document.getElementById(parent.id);
+  return ul.querySelector(`#${parent.id}`);
+}
+
+function displayCrudButton(bool) {
+  const crudBtns = document.querySelectorAll(".crudBtn");
+  crudBtns.forEach((item) => (item.disabled = bool));
 }
