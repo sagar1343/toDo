@@ -14,10 +14,13 @@ function createTask(event) {
   li.classList.add("listItem");
   li.innerHTML = `
   <div class="listBody">
-    <p>${input.value}</p>
-    <div>
-      <button class="crudBtn edit">Edit</button>
-      <button class="crudBtn delete">Delete</button>
+    <div class='taskContent'>
+      <p>${input.value}</p>
+    </div>
+    <div class="btnContainer">
+      <button id="edit${itemId}" class="crudBtn edit">Edit</button>
+      <button id="update${itemId}" class="crudBtn update">Update</button>
+      <button id="delete${itemId}" class="crudBtn delete">Delete</button>
     </div>
   </div>`;
   ul.appendChild(li);
@@ -30,48 +33,48 @@ function handleListClick(event) {
   const deleteBtn = event.target.classList.contains("delete");
   if (editBtn) {
     input.focus();
-    handleEdit(event.target);
+    const taskId = convertToItemId("edit", event.target.id);
+    handleEdit(taskId);
   } else if (deleteBtn) {
-    handleDelete(event.target);
+    const taskId = convertToItemId("delete", event.target.id);
+    handleDelete(taskId);
   }
 }
 
-function handleDelete(element) {
-  const deleteItem = getList(element);
-  deleteItem.remove();
-}
-
-function handleEdit(element) {
-  const editItem = getList(element);
-  const updateBtn = document.createElement("button");
-  input.value = editItem.querySelector("p").innerText;
-  submitBtn.disabled = true;
-  displayCrudButton(true);
-  updateBtn.id = "updateBtn";
-  updateBtn.innerText = "Update";
-  form.appendChild(updateBtn);
-
-  updateBtn.addEventListener("click", () =>
-    handleUpdate(editItem, updateBtn, element)
-  );
-}
-
-function handleUpdate(editItem, updateBtn) {
-  if (input.value) {
-    editItem.querySelector("p").innerText = input.value;
-    input.value = "";
-    submitBtn.disabled = false;
-    displayCrudButton(false);
-    updateBtn.remove();
-  }
-}
-
-function getList(element) {
-  const parent = element.closest(".listItem");
-  return ul.querySelector(`#${parent.id}`);
+function handleDelete(itemId) {
+  document.getElementById(itemId).remove();
 }
 
 function displayCrudButton(bool) {
   const crudBtns = document.querySelectorAll(".crudBtn");
   crudBtns.forEach((item) => (item.disabled = bool));
+}
+
+function handleEdit(itemId) {
+  const item = document.getElementById(itemId);
+  const popText = item.querySelector("p").innerText;
+  const newInput = document.createElement("input");
+  const updateBtn = item.querySelector(".update");
+  item.querySelector("p").replaceWith(newInput);
+  newInput.value = popText;
+  newInput.focus();
+  item.querySelector(".update").style.display = "block";
+  item.querySelector(".edit").style.display = "none";
+  updateBtn.addEventListener("click", () => handleUpdate(item));
+}
+function handleUpdate(item) {
+  const currentInput = item.querySelector("input");
+  const extractedInput = currentInput.value;
+  if (extractedInput) {
+    const updatedPara = document.createElement("p");
+    updatedPara.innerText = extractedInput;
+    currentInput.replaceWith(updatedPara);
+    item.querySelector(".update").style.display = "none";
+    item.querySelector(".edit").style.display = "block";
+  }
+}
+function convertToItemId(typeOfbtn, btnId) {
+  const numericPart = btnId.replace(`${typeOfbtn}`, "");
+  const itemId = `item${numericPart}`;
+  return itemId;
 }

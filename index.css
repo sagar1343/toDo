@@ -81,8 +81,7 @@ button:disabled:hover {
 .crudBtn:hover {
   background-color: var(--tertiory-color);
 }
-#submitBtn,
-#updateBtn {
+#submitBtn {
   color: var(--primary-color);
   background-color: white;
   margin-block: 1rem;
@@ -103,7 +102,15 @@ button:disabled:hover {
   color: white;
 }
 
-li p {
+div.taskContent {
+  overflow: hidden;
   font-size: 1.3rem;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+div.btnContainer {
+  display: flex;
+  gap: 1rem;
+}
+.update {
+  display: none;
 }
