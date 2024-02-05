@@ -61,6 +61,9 @@ function handleEdit(itemId) {
   item.querySelector(".update").style.display = "block";
   item.querySelector(".edit").style.display = "none";
   submitBtn.disabled = true;
+  displayCrudButton(true);
+  console.log(updateBtn);
+  updateBtn.disabled = false;
   updateBtn.addEventListener("click", () => handleUpdate(item));
 }
 function handleUpdate(item) {
@@ -73,6 +76,7 @@ function handleUpdate(item) {
     item.querySelector(".update").style.display = "none";
     item.querySelector(".edit").style.display = "block";
     submitBtn.disabled = false;
+    displayCrudButton(false);
   }
 }
 function convertToItemId(typeOfbtn, btnId) {
