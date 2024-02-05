@@ -72,6 +72,7 @@ function handleUpdate(item) {
     currentInput.replaceWith(updatedPara);
     item.querySelector(".update").style.display = "none";
     item.querySelector(".edit").style.display = "block";
+    submitBtn.disabled = false;
   }
 }
 function convertToItemId(typeOfbtn, btnId) {
