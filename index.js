@@ -60,6 +60,7 @@ function handleEdit(itemId) {
   newInput.focus();
   item.querySelector(".update").style.display = "block";
   item.querySelector(".edit").style.display = "none";
+  submitBtn.disabled = true;
   updateBtn.addEventListener("click", () => handleUpdate(item));
 }
 function handleUpdate(item) {
